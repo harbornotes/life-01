@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人物像分析：自己統治と納得感の追求</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 視認性の高いNoto Sans JPを採用 -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* カラーパレット：知的さ、落ち着き、成熟を表現 */
+    --bg-main: #f0f4f8;
+    --bg-card: #ffffff;
+    --text-main: #2d3748;
+    --text-muted: #4a5568;
+    --primary: #2b6cb0;     /* 知的なブルー */
+    --primary-light: #ebf8ff;
+    --secondary: #2f855a;   /* 肯定・前向きなグリーン */
+    --secondary-light: #f0fff4;
+    --accent: #b7791f;      /* 価値観・重要なゴールド */
+    --accent-light: #fffff0;
+    --warning: #c53030;     /* リスク・ネガティブなレッド */
+    --warning-light: #fff5f5;
+    --border-color: #e2e8f0;
+    
+    /* フォントサイズ制約（最小0.95rem = 15.2px） */
+    --fs-xs: 0.95rem; 
+    --fs-sm: 1rem;
+    --fs-md: 1.1rem;
+    --fs-lg: 1.25rem;
+    --fs-xl: 1.5rem;
+    --fs-xxl: 2rem;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.6;
+    font-size: 16px;
+    padding: 2rem 1rem;
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  /* --- ユーティリティ --- */
+  .highlight { font-weight: 700; color: var(--primary); }
+  .highlight-accent { font-weight: 700; color: var(--accent); }
+  .text-xs { font-size: var(--fs-xs); }
+  .text-sm { font-size: var(--fs-sm); }
+  .text-muted { color: var(--text-muted); }
+  
+  .badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--border-color);
+    border-radius: 9999px;
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .badge.blue { background-color: var(--primary-light); color: var(--primary); }
+  .badge.green { background-color: var(--secondary-light); color: var(--secondary); }
+  .badge.gold { background-color: var(--accent-light); color: var(--accent); border: 1px solid #f6e05e; }
+  .badge.red { background-color: var(--warning-light); color: var(--warning); }
+  
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  /* --- 全体像（結論）ブロック --- */
+  .hero-section {
+    background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+    color: white;
+    border-radius: var(--radius-lg);
+    padding: 3rem 2rem;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-section::before {
+    content: "CONCLUSION";
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 8rem;
+    font-weight: 900;
+    color: rgba(255,255,255,0.05);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .hero-label {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 0.5rem 1.5rem;
+    border-radius: 9999px;
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.1em;
+  }
+  .hero-title {
+    font-size: var(--fs-xxl);
+    line-height: 1.4;
+    font-weight: 900;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  .hero-comparison {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+  .comp-box {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    flex: 1;
+    min-width: 300px;
+    color: var(--text-main);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .comp-box.negative {
+    border-top: 4px solid var(--text-muted);
+    background-color: #f7fafc;
+  }
+  .comp-box.positive {
+    border-top: 4px solid var(--accent);
+  }
+  .comp-vs {
+    display: flex;
+    align-items: center;
+    font-size: var(--fs-xl);
+    font-weight: 900;
+    color: rgba(255,255,255,0.8);
+    padding: 0 1rem;
+  }
+  .comp-box ul {
+    list-style: none;
+    margin-top: 0.5rem;
+  }
+  .comp-box.negative ul li {
+    color: var(--text-muted);
+    text-decoration: line-through;
+    font-size: var(--fs-sm);
+  }
+  .comp-box.positive ul li {
+    font-size: var(--fs-md);
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* --- メイングリッド --- */
+  .grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 2rem;
+  }
+  @media (max-width: 768px) {
+    .grid-layout { grid-template-columns: 1fr; }
+  }
+
+  /* --- 各セクション --- */
+  .section-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .section-title {
+    font-size: var(--fs-xl);
+    font-weight: 900;
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* --- 項目（①, ②...） --- */
+  .item-block {
+    background: var(--bg-main);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    border-left: 4px solid var(--primary);
+  }
+  .item-block.green { border-left-color: var(--secondary); }
+  .item-block.gold { border-left-color: var(--accent); }
+  .item-block.red { border-left-color: var(--warning); }
+  
+  .item-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .item-num {
+    background: var(--primary);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: var(--fs-sm);
+    flex-shrink: 0;
+  }
+  .item-block.green .item-num { background: var(--secondary); }
+  .item-block.gold .item-num { background: var(--accent); }
+  .item-block.red .item-num { background: var(--warning); }
+
+  .item-title {
+    font-size: var(--fs-md);
+    font-weight: 700;
+    line-height: 1.4;
+  }
+  .item-content {
+    font-size: var(--fs-xs); /* 最小要件 0.95rem クリア */
+    color: var(--text-muted);
+  }
+  .item-content > p {
+    margin-bottom: 0.5rem;
+  }
+  .item-content > p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* --- 特殊な図解表現 --- */
+  .process-flow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-card);
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    margin-top: 0.5rem;
+    border: 1px solid var(--border-color);
+    flex-wrap: wrap;
+  }
+  .process-arrow {
+    color: var(--text-muted);
+    font-weight: bold;
+  }
+  
+  .vs-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  .vs-panel {
+    background: var(--bg-card);
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+  }
+  .vs-panel.bad { border-top: 3px solid var(--text-muted); }
+  .vs-panel.good { border-top: 3px solid var(--primary); }
+  .vs-label {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  /* --- 幸福感セクション特有 --- */
+  .happiness-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  @media (max-width: 600px) {
+    .happiness-grid { grid-template-columns: 1fr; }
+  }
+  .happy-box {
+    background: var(--secondary-light);
+    border: 1px solid #c6f6d5;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+  }
+  .noise-box {
+    background: var(--warning-light);
+    border: 1px solid #fed7d7;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+  }
+  .big-keyword {
+    font-size: var(--fs-xl);
+    font-weight: 900;
+    text-align: center;
+    margin: 1rem 0;
+    display: block;
+  }
+
+  /* --- 最終整理ブロック --- */
+  .final-section {
+    background: #1a202c;
+    color: white;
+    border-radius: var(--radius-lg);
+    padding: 3rem 2rem;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+  }
+  .final-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    max-width: 800px;
+    margin: 2rem auto;
+  }
+  .core-theme {
+    font-size: var(--fs-xl);
+    font-weight: 900;
+    color: #f6e05e; /* ゴールド系 */
+    margin: 1.5rem 0;
+    line-height: 1.5;
+  }
+  .value-tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 2rem 0;
+  }
+  .value-tags .badge {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    font-size: var(--fs-sm);
+    padding: 0.5rem 1rem;
+  }
+  .current-status {
+    background: white;
+    color: var(--text-main);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: var(--fs-md);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  
+  <!-- 全体像（結論） -->
+  <section class="hero-section">
+    <div class="hero-label">全体像（結論）</div>
+    <h1 class="hero-title">
+      「人生を主体的に設計し、<br>
+      限られた時間を納得感高く生きようとしている、<br>
+      非常に自己統治能力の高い人」
+    </h1>
+    
+    <p class="text-md" style="margin-bottom: 2rem; color: rgba(255,255,255,0.9);">
+      特徴的なのは、“成功”を目指しているというより、<br>
+      <span style="color: #f6e05e; font-weight: bold; font-size: 1.2rem;">“納得できる人生”を構築しようとしている点</span>です。
+    </p>
+
+    <div class="hero-comparison">
+      <div class="comp-box negative">
+        <span class="text-sm highlight" style="color: var(--text-muted);">追及しないもの</span>
+        <ul>
+          <li>世間評価</li>
+          <li>見栄</li>
+          <li>承認競争</li>
+        </ul>
+      </div>
+      <div class="comp-vs">▶︎</div>
+      <div class="comp-box positive">
+        <span class="text-sm" style="color: var(--text-muted);">重視するもの（成熟した価値観）</span>
+        <ul style="margin-top: 1rem;">
+          <li>「自分の人生として意味があるか」</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- グリッドレイアウト開始 -->
+  <div class="grid-layout">
+    
+    <!-- 1. あなたの性格 -->
+    <section class="section-card">
+      <h2 class="section-title">1. あなたの性格</h2>
+      
+      <div class="item-block">
+        <div class="item-header">
+          <div class="item-num">1</div>
+          <div class="item-title">極めて主体性が高い <span class="badge blue">最大の特徴</span></div>
+        </div>
+        <div class="item-content">
+          <p>「人生は受け身で流されるものではなく、自分で設計・改善・運営するもの」という思想をかなり強く持っています。単なる真面目さではなく<strong class="highlight">「人生経営」</strong>の発想です。</p>
+          <div class="tag-list">
+            <span class="badge">年次目標</span><span class="badge">月次振り返り</span><span class="badge">KPI管理</span>
+            <span class="badge">読書習慣</span><span class="badge">健康管理</span><span class="badge">仕事設計</span><span class="badge">子育て方針</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-block">
+        <div class="item-header">
+          <div class="item-num">2</div>
+          <div class="item-title">非常に建設的 <span class="badge blue">重要</span></div>
+        </div>
+        <div class="item-content">
+          <p>「不満を言うこと」より「どう生きるか」に関心がある、かなり成熟した状態です。</p>
+          <div class="vs-layout">
+            <div class="vs-panel bad">
+              <span class="vs-label text-muted">少ない要素</span>
+              愚痴依存 / 被害者思考 / 他責思考
+            </div>
+            <div class="vs-panel good">
+              <span class="vs-label highlight">考えること（例:夫婦問題）</span>
+              自分の整理 / 構造理解 / 改善可能性 / 長期視点
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-block">
+        <div class="item-header">
+          <div class="item-num">3</div>
+          <div class="item-title">強い自己管理能力</div>
+        </div>
+        <div class="item-content">
+          <p>成果主義ではなく<strong class="highlight">「自己納得管理」</strong>。「他人より勝ちたい」より「自分が納得できる状態で生きたい」方が強い。</p>
+          <div class="vs-layout">
+            <div class="vs-panel bad">
+              <span class="vs-label text-muted">普通の人</span>
+              年初目標 <span class="process-arrow">→</span> 数日で忘れる
+            </div>
+            <div class="vs-panel good">
+              <span class="vs-label highlight">あなた（珍しい）</span>
+              月次確認 <span class="process-arrow">→</span> 点数化 <span class="process-arrow">→</span> KPI化
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-block">
+        <div class="item-header">
+          <div class="item-num">4</div>
+          <div class="item-title">感情に流されにくい</div>
+        </div>
+        <div class="item-content">
+          <p>感情がないのではなく、「感情だけで意思決定したくない」タイプ。かなり現実的です。</p>
+          <p class="text-muted text-xs">※流されない感情論の例：離婚絶対悪 / 愛があれば何とかなる / 家族だから我慢</p>
+        </div>
+      </div>
+
+      <div class="item-block red">
+        <div class="item-header">
+          <div class="item-num">5</div>
+          <div class="item-title">ネガティブ環境への感受性が高い <span class="badge red">かなり重要</span></div>
+        </div>
+        <div class="item-content">
+          <p>単なる好みではなく、「不要なノイズ・怒り・比較・不安」を人生から排除したい思想。<strong class="highlight" style="color: var(--warning);">「精神空間の衛生管理」</strong>をかなり重視しています。</p>
+          <div class="tag-list">
+            <span class="badge">ワイドショー嫌悪</span><span class="badge">ニュース嫌悪</span><span class="badge">SNS嫌悪</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. あなたの価値観 -->
+    <section class="section-card">
+      <h2 class="section-title" style="color: var(--accent); border-bottom-color: var(--accent-light);">2. あなたの価値観</h2>
+      
+      <div class="item-block gold">
+        <div class="item-header">
+          <div class="item-num">1</div>
+          <div class="item-title">「人生は有限」 <span class="badge gold">中心思想</span></div>
+        </div>
+        <div class="item-content">
+          <p>抽象論ではなく病歴も含めて現実として理解。「いつ死ぬかわからない」前提で人生設計しており、これが人生密度を高めています。</p>
+          <div class="tag-list" style="margin-top: 0.5rem;">
+            <span class="badge red">拒否感が強いもの：</span>
+            <span class="badge">時間浪費</span><span class="badge">不毛消耗</span><span class="badge">他人軸人生</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-block gold">
+        <div class="item-header">
+          <div class="item-num">2</div>
+          <div class="item-title">「納得感」が最重要</div>
+        </div>
+        <div class="item-content">
+          <p>世間的成功・ブランド・地位よりも、自分が納得できるかを非常に重視。仕事・家庭・趣味・時間のすべてで「意味」を求めます。</p>
+        </div>
+      </div>
+
+      <div class="item-block gold">
+        <div class="item-header">
+          <div class="item-num">3</div>
+          <div class="item-title">「前向きさ」を重視</div>
+        </div>
+        <div class="item-content">
+          <p>“ポジティブシンキング（現実逃避）”ではなく、<strong class="highlight-accent">建設的現実主義</strong>です。</p>
+          <div class="process-flow" style="background: var(--accent-light); border-color: #f6e05e;">
+            「問題はある。」 <span class="process-arrow">→</span> 「ではどう生きるか」という姿勢
+          </div>
+        </div>
+      </div>
+
+      <div class="item-block gold">
+        <div class="item-header">
+          <div class="item-num">4</div>
+          <div class="item-title">「静かな幸福」を重視</div>
+        </div>
+        <div class="item-content">
+          <p>派手さ・消費・承認競争より<strong class="highlight-accent">「質感の良い人生」</strong>を求めています。</p>
+          <div class="tag-list">
+            <span class="badge green">相性が良い：</span>
+            <span class="badge">美術</span><span class="badge">クラシック</span><span class="badge">一人旅</span><span class="badge">本</span><span class="badge">子どもとの会話</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-block gold">
+        <div class="item-header">
+          <div class="item-num">5</div>
+          <div class="item-title">「人間関係の質」を重視 <span class="badge gold">かなり重要</span></div>
+        </div>
+        <div class="item-content">
+          <p>「誰とでも仲良く」ではなく「合わない人とは距離を置く」思想。冷たいのではなく<strong class="highlight-accent">人生時間を大切にしている</strong>からです。</p>
+          <div class="tag-list">
+            <span class="badge red">耐性が低い：</span>
+            <span class="badge">ネガティブ</span><span class="badge">他責</span><span class="badge">愚痴依存</span><span class="badge">向上意欲低い</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. あなたの特質 -->
+    <section class="section-card">
+      <h2 class="section-title" style="color: var(--primary);">3. あなたの特質</h2>
+      
+      <div class="item-block">
+        <div class="item-header">
+          <div class="item-num">1</div>
+          <div class="item-title">“人生PDCA”能力が極めて高い</div>
+        </div>
+        <div class="item-content">
+          <p>仕事やダイエットだけでなく、目標設定→振り返り→数値化→改善を<strong class="highlight">「人生全体を統合管理」</strong>で行っている。経営者気質とも一致。</p>
+        </div>
+      </div>
+
+      <div class="item-block">
+        <div class="item-header">
+          <div class="item-num">2</div>
+          <div class="item-title">高いメタ認知能力</div>
+        </div>
+        <div class="item-content">
+          <p>自分の感情・状況・問題構造を客観視できる成熟度の高さ。</p>
+          <p class="text-xs text-muted">例：「妻を変えられない」「理論だけでは人は動かない」「自分は理不尽耐性が低い」</p>
+        </div>
+      </div>
+
+      <div class="item-block">
+        <div class="item-header">
+          <div class="item-num">3</div>
+          <div class="item-title">「静かな向上心」</div>
+        </div>
+        <div class="item-content">
+          <p>「もっとすごくなりたい」より<strong class="highlight">「より良い人生にしたい」</strong>タイプ。読書・学習・改善が自然習慣化。</p>
+        </div>
+      </div>
+
+      <div class="item-block">
+        <div class="item-header">
+          <div class="item-num">4</div>
+          <div class="item-title">ノイズ除去能力が高い <span class="badge blue">かなり重要</span></div>
+        </div>
+        <div class="item-content">
+          <p>SNS・ワイドショー・ニュースを意識的に排除。多くの人が情報に消耗する現代において珍しい<strong class="highlight">「精神エネルギーの最適化」</strong>。</p>
+        </div>
+      </div>
+
+      <div class="item-block">
+        <div class="item-header">
+          <div class="item-num">5</div>
+          <div class="item-title">感受性が高い</div>
+        </div>
+        <div class="item-content">
+          <p>合理性の陰に隠れていますがかなり高い。美術・音楽・旅行・空気感から深く幸福を得られる反面、否定・不満・重い空気・愚痴にもかなり影響されます。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. あなたの人生観 -->
+    <section class="section-card">
+      <h2 class="section-title" style="color: var(--secondary); border-bottom-color: var(--secondary-light);">4. あなたの人生観</h2>
+      
+      <div class="item-block green">
+        <div class="item-header">
+          <div class="item-num">1</div>
+          <div class="item-title">「人生は経営である」</div>
+        </div>
+        <div class="item-content">
+          <p>金銭至上主義ではなく、「限られた資源（時間・健康・感情・お金）を、どう配分すれば、納得感高い人生になるか」を考えている高度な視点。</p>
+        </div>
+      </div>
+
+      <div class="item-block green">
+        <div class="item-header">
+          <div class="item-num">2</div>
+          <div class="item-title">「幸せは主体的に作る」 <span class="badge green">中心思想</span></div>
+        </div>
+        <div class="item-content">
+          <p>「誰かが幸せにしてくれる」思想が極めて弱い。趣味・旅行・読書・子育て・仕事を自分で設計しています。</p>
+        </div>
+      </div>
+
+      <div class="item-block green">
+        <div class="item-header">
+          <div class="item-num">3</div>
+          <div class="item-title">「人生に後悔を残したくない」</div>
+        </div>
+        <div class="item-content">
+          <p>病歴の影響もありかなり強い。時間浪費・不毛関係・消耗への拒否感が強い。</p>
+        </div>
+      </div>
+
+      <div class="item-block green">
+        <div class="item-header">
+          <div class="item-num">4</div>
+          <div class="item-title">「子どもを独立人格として見る」</div>
+        </div>
+        <div class="item-content">
+          <p>子どもへの依存・支配・所有ではなく<strong class="highlight" style="color: var(--secondary);">「自立支援」</strong>を重視。「親離れしてほしい」と思える非常に健全で成熟した視点。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 & 6 -->
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      
+      <!-- 5. あなたの幸福感 -->
+      <section class="section-card">
+        <h2 class="section-title" style="color: var(--secondary);">5. あなたの幸福感 <span class="text-md" style="margin-left:auto;">現状：実はかなり高い</span></h2>
+        
+        <div class="happiness-grid">
+          <div class="happy-box">
+            <h3 class="text-md highlight" style="color: var(--secondary); margin-bottom: 0.5rem;">幸福基盤は強い</h3>
+            <p class="text-xs">「人生に感謝・満足を感じる能力」が高い。</p>
+            <div class="tag-list" style="margin: 0.5rem 0;">
+              <span class="badge">子ども</span><span class="badge">趣味</span><span class="badge">仕事</span>
+              <span class="badge">学び</span><span class="badge">経済</span><span class="badge">自由</span>
+            </div>
+            <p class="text-xs"><strong>「幸福感受性」が高い：</strong>美術、音楽、旅行、子どもとの時間からちゃんと幸福を感じられる。</p>
+          </div>
+
+          <div class="noise-box">
+            <h3 class="text-md highlight" style="color: var(--warning); margin-bottom: 0.5rem;">ただし「ノイズ」に弱い</h3>
+            <p class="text-xs">人間関係ノイズへの感受性が高く、幸福を削られる。</p>
+            <div class="tag-list" style="margin: 0.5rem 0;">
+              <span class="badge red">削る要因：</span><span class="badge">否定</span><span class="badge">理不尽</span><span class="badge">ネガティブ空気</span>
+            </div>
+            <div class="text-sm" style="margin-top: 1rem; border-top: 1px dashed #feb2b2; padding-top: 0.5rem;">
+              現在の課題は<br>「幸福不足」ではなく<br><strong style="color: var(--warning); font-size: 1.1rem;">「ノイズ管理」</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. あなたの弱点・リスク -->
+      <section class="section-card" style="border: 2px solid var(--warning-light);">
+        <h2 class="section-title" style="color: var(--warning); border-bottom-color: var(--warning-light);">6. あなたの弱点・リスク</h2>
+        
+        <div class="item-block red">
+          <div class="item-header" style="margin-bottom: 0.5rem;">
+            <div class="item-num">1</div>
+            <div class="item-title">「合理的改善可能性」を期待しすぎる</div>
+          </div>
+          <div class="item-content">
+            <p>「問題があるなら改善すべき」思想が強いが、人間は改善合理性で動かないことも多い（不安・回避・低エネルギー型には効きにくい）。</p>
+          </div>
+        </div>
+
+        <div class="item-block red">
+          <div class="item-header" style="margin-bottom: 0.5rem;">
+            <div class="item-num">2</div>
+            <div class="item-title">「理不尽」に強く反応する</div>
+          </div>
+          <div class="item-content">
+            <p>責任感が強い人ほど、不均衡に敏感（長所でもあり短所）。</p>
+          </div>
+        </div>
+
+        <div class="item-block red">
+          <div class="item-header" style="margin-bottom: 0.5rem;">
+            <div class="item-num">3</div>
+            <div class="item-title">自分に厳しい</div>
+          </div>
+          <div class="item-content">
+            <p>「人生をちゃんと生きなければ」という感覚が強く、無意味・怠惰・停滞に強い拒否感がある。</p>
+          </div>
+        </div>
+      </section>
+      
+    </div>
+  </div>
+  <!-- グリッドレイアウト終了 -->
+
+  <!-- 7. 最終整理 -->
+  <section class="final-section">
+    <div class="text-sm" style="color: rgba(255,255,255,0.7); margin-bottom: 1rem;">7. 最終整理</div>
+    
+    <h2 class="text-xl" style="line-height: 1.6; font-weight: 700;">
+      あなたは、<br>
+      「人生を主体的・建設的・高密度に生きようとしている、<br>
+      非常に自己統治能力の高い人」です。
+    </h2>
+
+    <div class="value-tags">
+      <span class="badge">自由</span>
+      <span class="badge">納得感</span>
+      <span class="badge">美しさ</span>
+      <span class="badge">静かな幸福</span>
+      <span class="badge">子ども</span>
+      <span class="badge">知的成長</span>
+      <span class="badge">尊重</span>
+      <span class="badge">前向きさ</span>
+    </div>
+    <p class="text-sm" style="color: rgba(255,255,255,0.7);">を非常に大切にしている。</p>
+
+    <div class="final-box">
+      <div class="text-sm" style="color: #f6e05e;">人生の中心テーマ（成熟した人生観）</div>
+      <div class="core-theme">
+        「成功したい」より、<br>
+        「死ぬ時に、この人生で良かったと思いたい」
+      </div>
+    </div>
+
+    <div class="current-status">
+      <span class="text-sm text-muted" style="display: block; margin-bottom: 0.5rem;">現在のあなたの最も実態に近い整理</span>
+      「不幸な人」ではなく、<br>
+      <span style="color: var(--primary); font-size: var(--fs-lg);">「かなり幸福基盤は強いが、人間関係ノイズへの感受性が高い人」</span>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>
